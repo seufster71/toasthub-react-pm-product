@@ -15,7 +15,7 @@
  */
 import reducerUtils from '../../core/common/reducer-utils';
 
-export default function usersReducer(state = {}, action) {
+export default function productReducer(state = {}, action) {
 	let myState = {};
 	switch(action.type) {
 		case 'LOAD_INIT_PM_PRODUCT': {
@@ -37,6 +37,7 @@ export default function usersReducer(state = {}, action) {
 			} else {
 				return state;
 			}
+			break;
 		}
 		case 'LOAD_LIST_PM_PRODUCT': {
 			if (action.responseJson != null && action.responseJson.params != null) {
@@ -51,6 +52,7 @@ export default function usersReducer(state = {}, action) {
 			} else {
 				return state;
 			}
+			break;
 		}
 		case 'PM_PRODUCT_ITEM': {
 			if (action.responseJson !=  null && action.responseJson.params != null) {
@@ -66,9 +68,23 @@ export default function usersReducer(state = {}, action) {
 							let result = "";
 							if (prefForms.PM_PRODUCT_FORM[i].value != null && prefForms.PM_PRODUCT_FORM[i].value != ""){
 								let formValue = JSON.parse(prefForms.PM_PRODUCT_FORM[i].value);
-								for (let j = 0; j < formValue.options.length; j++) {
-									if (formValue.options[j] != null && formValue.options[j].defaultInd == true){
-										result = formValue.options[j].value;
+								if (formValue.options != null) {
+									for (let j = 0; j < formValue.options.length; j++) {
+										if (formValue.options[j] != null && formValue.options[j].defaultInd == true){
+											result = formValue.options[j].value;
+										}
+									}
+								} else if (formValue.referPref != null) {
+									let pref = action.appPrefs.prefTexts[formValue.referPref.prefName][formValue.referPref.prefItem];
+									if (pref != null && pref.value != null && pref.value != "") {
+										let value = JSON.parse(pref.value);
+										if (value.options != null) {
+											for (let j = 0; j < value.options.length; j++) {
+												if (value.options[j] != null && value.options[j].defaultInd == true){
+													result = value.options[j].value;
+												}
+											}
+										}
 									}
 								}
 							}
@@ -89,21 +105,27 @@ export default function usersReducer(state = {}, action) {
 			} else {
 				return state;
 			}
+			break;
 		}
 		case 'PM_PRODUCT_INPUT_CHANGE': {
 			return reducerUtils.updateInputChange(state,action);
+			break;
 		}
 		case 'PM_PRODUCT_CLEAR_FIELD': {
 			return reducerUtils.updateClearField(state,action);
+			break;
 		}
 		case 'PM_PRODUCT_LISTLIMIT': {
 			return reducerUtils.updateListLimit(state,action);
+			break;
 		}
 		case 'PM_PRODUCT_SEARCH': { 
 			return reducerUtils.updateSearch(state,action);
+			break;
 		}
 		case 'PM_PRODUCT_ORDERBY': { 
 			return reducerUtils.updateOrderBy(state,action);
+			break;
 		}
 		default:
 			return state;
