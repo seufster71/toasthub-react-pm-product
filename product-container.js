@@ -176,8 +176,27 @@ class PMProductContainer extends Component {
 				this.onDelete(item);
 				break;
 			}
+			case 'PROJECT': {
+				this.props.history.push({pathname:'/pm-project',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
+			case 'RELEASE': {
+				this.props.history.push({pathname:'/pm-release',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
+			case 'BACKLOG': {
+				this.props.history.push({pathname:'/pm-backlog',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
+			case 'DEFECT': {
+				this.props.history.push({pathname:'/pm-defect',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
+			case 'ENHANCEMENT': {
+				this.props.history.push({pathname:'/pm-enhancement',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
 		}
-			//this.props.history.push({pathname:'/admin-roles',state:{parent:item}});
 	}
 	
 	closeModal = () => {
