@@ -196,6 +196,11 @@ class PMProductContainer extends Component {
 				this.props.history.push({pathname:'/pm-enhancement',state:{parent:item,parentType:"PRODUCT"}});
 				break;
 			}
+			case 'SHARE': {
+				this.props.history.push({pathname:'/pm-team',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
+			
 		}
 	}
 	
@@ -208,8 +213,8 @@ class PMProductContainer extends Component {
 		this.props.actions.list({state:this.props.pmproduct});
 	}
 	
-	inputChange = (fieldName,switchValue) => {
-		utils.inputChange(this.props,fieldName,switchValue);
+	inputChange = (type,field,value,event) => {
+		utils.inputChange({type,props:this.props,field,value,event});
 	}
 	
 	onBlur = (field) => {
