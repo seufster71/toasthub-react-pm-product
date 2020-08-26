@@ -200,7 +200,10 @@ class PMProductContainer extends Component {
 				this.props.history.push({pathname:'/pm-team',state:{parent:item,parentType:"PRODUCT"}});
 				break;
 			}
-			
+			case 'SCRUM': {
+				this.props.history.push({pathname:'/pm-scrum',state:{parent:item,parentType:"PRODUCT"}});
+				break;
+			}
 		}
 	}
 	
