@@ -45,7 +45,7 @@ export function init() {
   };
 }
 
-export function list({state,listStart,listLimit,searchCriteria,orderCriteria,info}) {
+export function list({state,listStart,listLimit,searchCriteria,orderCriteria,info,paginationSegment}) {
 	return function(dispatch) {
 		let requestParams = {};
 		requestParams.action = "LIST";
@@ -215,4 +215,21 @@ export function clearField(field) {
 		 params.field = field;
 		dispatch({ type:"PM_PRODUCT_CLEAR_FIELD",params});
 	};
+}
+export function setErrors({errors}) {
+	 return function(dispatch) {
+		 dispatch({ type:"PM_PRODUCT_SET_ERRORS",errors});
+	 };
+}
+
+export function openDeleteModal({item}) {
+	 return function(dispatch) {
+		 dispatch({type:"PM_PRODUCT_OPEN_DELETE_MODAL",item});
+	 };
+}
+
+export function closeDeleteModal() {
+	 return function(dispatch) {
+		 dispatch({type:"PM_PRODUCT_CLOSE_DELETE_MODAL"});
+	 };
 }

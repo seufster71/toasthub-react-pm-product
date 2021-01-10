@@ -16,7 +16,6 @@
 import reducerUtils from '../../core/common/reducer-utils';
 
 export default function productReducer(state = {}, action) {
-	let myState = {};
 	switch(action.type) {
 		case 'LOAD_INIT_PM_PRODUCT': {
 			if (action.responseJson != null && action.responseJson.params != null) {
@@ -31,13 +30,19 @@ export default function productReducer(state = {}, action) {
 					listStart: reducerUtils.getListStart(action),
 					orderCriteria: [{'orderColumn':'PM_PRODUCT_TABLE_NAME','orderDir':'ASC'}],
     				searchCriteria: [{'searchValue':'','searchColumn':'PM_PRODUCT_TABLE_NAME'}],
+    				paginationSegment: 1,
 					selected: null,
-					isModifyOpen: false
+					isModifyOpen: false,
+					pageName:"PMPRODUCT",
+					isDeleteModalOpen: false,
+					errors:null, 
+					warns:null, 
+					successes:null,
+					searchValue:""
 				});
 			} else {
 				return state;
 			}
-			break;
 		}
 		case 'LOAD_LIST_PM_PRODUCT': {
 			if (action.responseJson != null && action.responseJson.params != null) {
@@ -46,13 +51,17 @@ export default function productReducer(state = {}, action) {
 					items: reducerUtils.getItems(action),
 					listLimit: reducerUtils.getListLimit(action),
 					listStart: reducerUtils.getListStart(action),
+					paginationSegment: action.paginationSegment,
 					selected: null,
-					isModifyOpen: false
+					isModifyOpen: false,
+					isDeleteModalOpen: false,
+					errors:null, 
+					warns:null, 
+					successes:null
 				});
 			} else {
 				return state;
 			}
-			break;
 		}
 		case 'PM_PRODUCT_ITEM': {
 			if (action.responseJson !=  null && action.responseJson.params != null) {
@@ -105,27 +114,37 @@ export default function productReducer(state = {}, action) {
 			} else {
 				return state;
 			}
-			break;
 		}
 		case 'PM_PRODUCT_INPUT_CHANGE': {
 			return reducerUtils.updateInputChange(state,action);
-			break;
 		}
 		case 'PM_PRODUCT_CLEAR_FIELD': {
 			return reducerUtils.updateClearField(state,action);
-			break;
 		}
 		case 'PM_PRODUCT_LISTLIMIT': {
 			return reducerUtils.updateListLimit(state,action);
-			break;
 		}
 		case 'PM_PRODUCT_SEARCH': { 
 			return reducerUtils.updateSearch(state,action);
-			break;
 		}
 		case 'PM_PRODUCT_ORDERBY': { 
 			return reducerUtils.updateOrderBy(state,action);
-			break;
+		}
+		case 'PM_PRODUCT_SET_ERRORS': {
+			return Object.assign({}, state, {
+				errors: action.errors
+			});
+		}
+		case 'PM_PRODUCT_CLOSE_DELETE_MODAL': {
+			return Object.assign({}, state, {
+				isDeleteModalOpen: false
+			});
+		}
+		case 'PM_PRODUCT_OPEN_DELETE_MODAL': {
+			return Object.assign({}, state, {
+				isDeleteModalOpen: true,
+				selected: action.item
+			});
 		}
 		default:
 			return state;
