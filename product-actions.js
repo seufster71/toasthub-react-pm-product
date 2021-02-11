@@ -21,13 +21,14 @@ import actionUtils from '../../core/common/action-utils';
 
 
 // thunks
-export function init() {
+export function init({lang}) {
   return function(dispatch) {
     let requestParams = {};
     requestParams.action = "INIT";
     requestParams.service = "PM_PRODUCT_SVC";
     requestParams.prefTextKeys = new Array("PM_PRODUCT_PAGE");
     requestParams.prefLabelKeys = new Array("PM_PRODUCT_PAGE");
+    requestParams.lang = lang;
     let params = {};
     params.requestParams = requestParams;
     params.URI = '/api/member/callService';
